@@ -1,4 +1,5 @@
-manuals
-=======
+Kimai Manuals
+=============
 
 Manuals and links to documentation
+
