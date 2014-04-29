@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?php
+/**
+ * Kimai invoice temaplte greywillfade
+ *
+ * Based on https://github.com/greywillfade/freeagent-invoice.
+ * Migrated to Kimai by https://github.com/kevinpapst/kimai
+*/
+
+// ==================== CONFIGURATIONS ====================
+
+// days until payment must be placed
+$x_payDays      = 30;
+// my company details
+$myCompany      = array(
+    'name'      => 'My Company',
+    'email'     => 'email@company.com',
+    'street'    => 'Example-Street 14',
+    'zipcode'   => '12345',
+    'city'      => 'Town-City',
+    'contract'  => 'PO 87227643',
+    'reg_nr'    => '9273109',
+    'bank_name' => 'My Bank Name',
+    'bank_code' => '01-01-01',
+    'bank_acc'  => '1234567890'
+);
+
+// ================================================================================================================
+// ==================== ONLY EDIT BELOW THIS POINT, IF YOU WANT TO FURTHER ADJUST THE TEMPLATE ====================
+// ================================================================================================================
+
+// array values
+$entries        = $this->entries;
+$projects       = $this->projects;
+$customer       = $this->customer;
+
+// scalar values
+$amount         = $this->amount;
+$vat            = $this->vat;
+$vatRate        = $this->vatRate;
+$total          = $this->total;
+$invoiceId      = $this->invoiceId;
+$currency       = $this->currencySign;
+$currencyName   = $this->currencyName;
+$dateFormat     = $this->dateFormat;
+$beginDate      = $this->beginDate;
+$endDate        = $this->endDate;
+$invoiceDate    = $this->invoiceDate;
+
+// some simple calculation and formatting, which shouldn't be done in the template HTML code itself
+$x_invoiceDate  = strftime($dateFormat, $invoiceDate);                              // the date of this invoice
+$x_dueDate      = strftime($dateFormat, $invoiceDate + (86400*$x_payDays));         // date when payment must be placed
+
+?><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <title>Invoice <?php echo $invoiceId; ?> | <?php echo $myCompany['name']; ?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->invoiceUrl; ?>styles/base.css" media="screen" />
+    <!-- Base Stylesheet do not change or remove -->
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->invoiceUrl; ?>styles/sj.css" />
+</head>
+<body>
+    <div id="invoice">
+        <div id="invoice-header">
+            <img alt="Mainlogo_large" class="logo screen" src="<?php echo $this->invoiceUrl; ?>images/logo.png" />
+            <div class="vcard" id="company-address">
+                <div class="fn org"><strong><?php echo $myCompany['name']; ?></strong>
+                </div>
+                <div class="adr">
+                    <div class="street-address"><?php echo $myCompany['street']; ?></div>
+                    <!-- street-address -->
+                    <div class="locality"><span class="postal-code"><?php echo $myCompany['zipcode']; ?></span> <?php echo $myCompany['city']; ?></div>
+                </div>
+                <!-- adr -->
+                <div class="email"><?php echo $myCompany['email']; ?></div>
+            </div>
+        </div>
+        <!-- #invoice-header -->
+        <div id="invoice-info">
+            <h2>Invoice <strong><?php echo $invoiceId; ?></strong></h2>
+            <h3><?php echo $x_invoiceDate; ?></h3>
+            <p id="payment-terms">Payment Terms: <?php echo $x_payDays;?> days</p>
+            <p id="payment-due">Payment due by <?php echo $x_dueDate; ?></p>
+            <p id="payment-total"><?php echo $currency; ?> <?php echo $total; ?></p>
+        </div>
+        <!-- #invoice-info -->
+        <div class="vcard" id="client-details">
+            <div class="fn"><?php echo $customer['contact']; ?></div>
+            <div class="org"><?php echo $customer['company']; ?></div>
+            <div class="adr">
+                <div class="street-address"><?php echo $customer['street']; ?></div>
+                <!-- street-address -->
+                <div class="locality"><span class="postal-code"><?php echo $customer['zipcode']; ?></span> <?php echo $customer['city']; ?></div>
+            </div>
+            <!-- adr -->
+        </div>
+        <!-- #client-details vcard -->
+        <table id="invoice-amount">
+            <thead>
+                <tr id="header_row">
+                    <th class="quantity_th">Quantity</th>
+                    <th class="left details_th">Details</th>
+                    <th class="unitprice_th">Unit Price (<?php echo $currency; ?>)</th>
+                    <th class="subtotal_th">Net Subtotal (<?php echo $currency; ?>)</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach($entries as $row) {
+                if ($row['type'] == 'timeSheet') {
+                    ?>
+                    <tr class="item">
+                        <td class="item_l"><?php echo number_format($row['hour'], 2); ?></td>
+                        <td class="item_l"><?php echo $row['desc']; ?></td>
+                        <td class="item_r"><?php echo $currency; ?></span> <span><?php echo number_format($row['rate'],2 ); ?></td>
+                        <td class="item_r"><?php echo $currency; ?></span> <span><?php echo $row['amount']; ?></td>
+                    </tr>
+                <?php } else { ?>
+                    <tr class="item">
+                        <td class="item_l"><?php echo number_format($row['multiplier'], 2); ?></td>
+                        <td class="item_l"><?php echo $row['desc']; ?></td>
+                        <td class="item_r"><?php echo $currency; ?></span> <span><?php echo number_format($row['value'],2 ); ?></td>
+                        <td class="item_r"><?php echo $currency; ?></span> <span><?php echo $row['amount']; ?></td>
+                    </tr>
+                <?php }
+            } ?>
+            </tbody>
+            <tfoot>
+            <tr id="net_total_tr">
+                <td colspan="2">&nbsp;</td>
+                <td class="item_r">Net Total</td>
+                <td class="item_r"><?php echo $currency; ?> <?php echo number_format($amount, 2); ?></td>
+            </tr>
+            <tr id="vat_tr">
+                <td colspan="2">&nbsp;</td>
+                <td class="item_r">VAT <?php echo $vatRate; ?>%</td>
+                <td class="item_r"><?php echo $currency; ?> <?php echo number_format($vat, 2); ?></td>
+            </tr>
+            <tr id="total_tr">
+                <td colspan="2">&nbsp;</td>
+                <td class="total" id="total_currency"><span class="currency"><?php echo $currencyName; ?> </span> Total</td>
+                <td class="total"><?php echo $currency; ?> <?php echo number_format($total, 2); ?></td>
+            </tr>
+            </tfoot>
+        </table>
+        <!-- invoice-amount -->
+        <div id="invoice-other">
+            <h2>Other Information</h2> 
+            <div id="company-reg-number"><strong>Company Registration Number:</strong> <?php echo $myCompany['reg_nr']; ?></div>
+            <div id="contract-number"><strong>Contract/PO:</strong> <?php echo $myCompany['contract']; ?></div>
+        </div>
+        <!-- invoice-other -->
+        <div id="payment-details">
+            <h2>Payment Details</h2> 
+            <div id="bank_name"><?php echo $myCompany['bank_name']; ?></div>
+            <div id="sort-code"><strong>Bank/Sort Code:</strong> <?php echo $myCompany['bank_code']; ?></div>
+            <div id="account-number"><strong>Account Number:</strong> <?php echo $myCompany['bank_acc']; ?></div>
+            <div id="payment-reference"><strong>Payment Reference:</strong> <?php echo $invoiceId; ?></div>
+        </div>
+        <!-- payment-details -->
+        <div id="comments">
+            <p>Please send payment using the included account details. For the payment reference, please use the invoice reference, found above.</p>
+            <p>If you have any questions regarding this work please get in touch using <?php echo $myCompany['email']; ?>.</p>
+            <p>Thank you,<br/><?php echo $myCompany['name']; ?></p>
+        </div>
+        <!-- comments -->
+    </div>
+</body>
+
+</html>
