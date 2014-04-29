@@ -1,0 +1,203 @@
+<!doctype html><?php
+/**
+ * This file is part of
+ * Kimai - Open Source Time Tracking // http://www.kimai.org
+ * (c) 2006-2013 Kimai-Development-Team
+ *
+ * Kimai is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; Version 3, 29 June 2007
+ *
+ * Kimai is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Kimai; If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/**
+ * An example HTML template for displaying all available invoice variables.
+ *
+ * @author Kevin Papst <kpapst@gmx.net>
+ */
+
+$allVariables   = $this->getVars();
+$customer       = $this->customer;
+$projects       = $this->projects;
+$entries        = $this->entries;
+
+?><html>
+	<head>
+		<meta charset="utf-8">
+		<title>Debug Invoice</title>
+		<link rel="stylesheet" href="invoices/06_Test/style.css">
+	</head>
+	<body>
+		<header>
+			<h1>Debug Template Variables</h1>
+		</header>
+		<article>
+            <p>
+                This template has one simple purpose:
+                It dumps all available variables, to simplify the process for you, building up your own invoice template.
+            </p>
+            <p>
+                You might find some more information about building invoice templates at:
+                <a href="http://www.kimai.org/documentation/developer/invoice-templates.html" target="_blank">http://www.kimai.org/documentation/developer/invoice-templates.html</a>
+            </p>
+
+            <hr/>
+
+            <h2>Global variables</h2>
+			<table class="variables">
+				<thead>
+					<tr>
+						<th>Variable name</th>
+                        <th>Value</th>
+                        <th>Syntax for ODT</th>
+                        <th>Syntax for PHP</th>
+					</tr>
+				</thead>
+				<tbody>
+                <?php
+                foreach($allVariables as $key => $value)
+                {
+                    if ($key == 'CustomerODT' || $key == 'ProjectODT') continue;
+                    echo '<tr>';
+                    echo '<td>'.$key.'</td>';
+                    if (!is_array($value)) {
+                        echo '<td>'.$value.'</td>';
+                        echo '<td>[var.'.$key.']</td>';
+                    } else {
+                        echo '<td><i>see below</i></td>';
+                        echo '<td><i>not available</i></td>';
+                    }
+                    echo '<td>$this->'.$key.'</td>';
+                    echo '</tr>';
+                }
+                ?>
+                <?php if (isset($this->ProjectODT)) { ?>
+                <tr>
+                    <td>project</td>
+                    <td><?php echo $this->ProjectODT; ?></td>
+                    <td>[var.project]</td>
+                    <td><i>not available</i></td>
+                </tr>
+                <?php } ?>
+				</tbody>
+			</table>
+
+            <?php if (isset($this->CustomerODT)) { ?>
+            <hr/>
+            <h2>Customer variables for ODT</h2>
+            <table class="variables">
+                <thead>
+                <tr>
+                    <th>Variable name</th>
+                    <th>Value</th>
+                    <th>Syntax for ODT</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                foreach($this->CustomerODT as $key => $value)
+                {
+                echo '<tr>';
+                    echo '<td>'.$key.'</td>';
+                    echo '<td>'.$value.'</td>';
+                    echo '<td>[var.'.$key.']</td>';
+                    echo '</tr>';
+                }
+                ?>
+                </tbody>
+            </table>
+            <?php } ?>
+
+            <hr/>
+
+            <h2>Customer variables for PHP</h2>
+            <table class="variables">
+                <thead>
+                <tr>
+                    <th>Variable name</th>
+                    <th>Value</th>
+                    <th>Syntax for PHP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                foreach($customer as $key => $value)
+                {
+                echo '<tr>';
+                    echo '<td>'.$key.'</td>';
+                    echo '<td>'.$value.'</td>';
+                    echo '<td>$this->customer['."'".$key."'".']</td>';
+                    echo '</tr>';
+                }
+                ?>
+                </tbody>
+            </table>
+
+            <hr/>
+
+            <h2>Projects variable for PHP</h2>
+            <table class="variables">
+                <thead>
+                <tr>
+                    <th>Row ID</th>
+                    <th>Value</th>
+                    <th>Syntax for PHP</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                $i = 0;
+                foreach($projects as $project)
+                {
+                    echo '<tr>';
+                    echo '<td>$this->projects'."['".$i."’]".'</td>';
+                    echo '<td class="array"><pre>';
+                    print_r($project);
+                    echo '</pre></td>';
+                    echo '<td>'.$i.'</td>';
+                    echo '</tr>';
+                    $i++;
+                }
+                ?>
+                </tbody>
+            </table>
+
+            <hr/>
+
+            <h2>Entries/Rows variable for PHP and ODT</h2>
+            <table class="variables">
+                <thead>
+                <tr>
+                    <th>Value</th>
+                    <th>Syntax for PHP</th>
+                    <th>Syntax for ODT</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                $i = 0;
+                foreach($entries as $entry)
+                {
+                    echo '<tr>';
+                    echo '<td>$this->entries'."['".$i."’]".'</td>';
+                    echo '<td class="array"><pre>'.print_r($entry,true).'</pre></td>';
+                    echo '<td class="array">';
+                    foreach ($entry as $k => $v) echo '[row.'.$k.']<br>';
+                    echo '</td>';
+                    echo '</tr>';
+                    $i++;
+                }
+                ?>
+                </tbody>
+            </table>
+
+        </article>
+	</body>
+</html>
