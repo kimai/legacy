@@ -28,11 +28,14 @@ $customer       = $this->customer;
 $projects       = $this->projects;
 $entries        = $this->entries;
 
+// variables which do not exist in the ODT renderer
+$noOdt = array('invoiceUrl');
+
 ?><html>
 	<head>
 		<meta charset="utf-8">
 		<title>Debug Invoice</title>
-		<link rel="stylesheet" href="invoices/06_Test/style.css">
+		<link rel="stylesheet" href="<?php echo $this->invoiceUrl; ?>style.css">
 	</head>
 	<body>
 		<header>
@@ -67,12 +70,15 @@ $entries        = $this->entries;
                     if ($key == 'CustomerODT' || $key == 'ProjectODT') continue;
                     echo '<tr>';
                     echo '<td>'.$key.'</td>';
-                    if (!is_array($value)) {
-                        echo '<td>'.$value.'</td>';
-                        echo '<td>[var.'.$key.']</td>';
-                    } else {
+                    if (is_array($value)) {
                         echo '<td><i>see below</i></td>';
                         echo '<td><i>not available</i></td>';
+                    } else if (in_array($key, $noOdt)) {
+                        echo '<td>'.$value.'</td>';
+                        echo '<td><i>not available</i></td>';
+                    } else {
+                        echo '<td>'.$value.'</td>';
+                        echo '<td>[var.'.$key.']</td>';
                     }
                     echo '<td>$this->'.$key.'</td>';
                     echo '</tr>';
