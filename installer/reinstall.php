@@ -14,7 +14,7 @@ if (!defined('KIMAI_DOMAIN') || empty(KIMAI_DOMAIN) || KIMAI_DOMAIN == 'http://w
 	die('Please adjust your KIMAI_DOMAIN setting in: ' . __FILE__ . PHP_EOL);
 }
 
-// Ahhhhhhh, broken by design ... things must be cleared up ...
+// broken by design ... things must be cleared up ...
 passthru('chmod -R 777 htdocs/temporary/');
 passthru('chmod -R 777 htdocs/includes/');
 
@@ -22,9 +22,10 @@ passthru('chmod -R 777 htdocs/includes/');
 include 'autoconf.php';
 
 // ATTENTION, THIS IS IMPORTANT AND DANGEROUS:
-// This nasty little command will drop ALL tables within the configured database, make sure you don't have any other stuff in there
+// This nasty little command will drop ALL tables with prefix set in kimai config within the configured database
+// make sure you don't have any other tables starting with this prefix
 echo 'Resetting database' . PHP_EOL;
-$sql = 'mysql --user='.$server_username.' --password=' .$server_password . ' --host=localhost --database=' . $server_database . ' -e "show tables" | grep -v Tables_in | grep -v "+" | gawk \'{print "drop table " $1 ";"}\' | mysql --user='.$server_username.' --password=' .$server_password . ' --host=localhost --database=' . $server_database;
+$sql = 'mysql --user='.$server_username.' --password='.$server_password.' --host='.$server_hostname.' --database='.$server_database.' --silent --skip-column-names -e "show tables" | grep -v '.$server_prefix.' | gawk \'{print "DROP TABLE " $1 ";"}\' | mysql --user='.$server_username.' --password='.$server_password.' --host='.$server_hostname.' --database='.$server_database;
 passthru($sql);
 
 echo 'Installing database' . PHP_EOL;
