@@ -38,7 +38,8 @@ echo kimaiInstall(
 		'password' => $server_password,
 		'lang'     => $language,
 		'prefix'   => $server_prefix,
-		'database' => $server_database
+		'database' => $server_database,
+        'timezone' => KIMAI_TIMEZONE,
 	)
 );
 
