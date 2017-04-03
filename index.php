@@ -45,6 +45,7 @@ $mobileConfig = array(
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="noindex,nofollow" />
 	<title>Kimai</title>
 	<link rel="stylesheet" href="//code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
 	<link rel="stylesheet" href="kimai/kimai.mobile.css" />
