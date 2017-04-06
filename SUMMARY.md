@@ -20,6 +20,7 @@
    * [Translations](developer/translations.md)
    * [Invoice templates](developer/invoice-templates.md)
    * [Authenticator](administrator/authenticator.md)
+   * [Email](administrator/email.md)
    * [Extensions](developer/extensions.md)
 * [About](administrator/README.md)
 * [FAQ](FAQ.md)
