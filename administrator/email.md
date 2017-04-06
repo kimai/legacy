@@ -23,7 +23,7 @@ Set the parameters according to the email documentation below.
 
 ### Configuration-parameters
 
-* **mail_transport:** This defines the Zend Mail transport mechanism used.  Default is **sendmail** (requires no further configuration).  **smtp** requires the following variables to be set as required by your smtp server and **file** which is not implemented/tested in kimai
+* **mail_transport:** This defines the Zend Mail transport mechanism used.  Default is **sendmail** (requires no further configuration).  **smtp** requires the following variables to be set as required by your smtp server
 * **smtp_name:** The DNS server name of your smtp server
 * **smtp_host:** The DNS or IP address or your SMTP Server
 * **smtp_port:** The port that your smtp server supports (examples: 25, 465, 587)
