@@ -136,7 +136,7 @@ An advanced LDAP authenticator, that allows further configuration options.
 * **autocreateUsers:** Shall users authenticated via LDAP be created automatically in kimai. If set to false the users have to be added manually to kimai and only password-verification will be handled via LDAP
 * **defaultGlobalRoleName:** The name of the default role newly created users will be associated with
 * **defaultGroupMemberships:** An array of group=>role mappings the user shall also be associated with
-* **createGroupMembershipsOnLogin:** Shall group membership be recreated as a user logs into kimai.  If set to true the groups defined by defaultGroupMemberships will be applied to the user as they login.  It does not remove their current groups it simply ensures a user has the default groups as define at the time they login. (Implemented in [Pull request] https://github.com/kimai/kimai/pull/918)
+* **createGroupMembershipsOnLogin:** Shall group membership be recreated as a user logs into kimai.  If set to true the groups defined by defaultGroupMemberships will be applied to the user as they login.  It does not remove their current groups it simply ensures a user has the default groups as define at the time they login. (Implemented in [Pull request](https://github.com/kimai/kimai/pull/918))
 
 Default settings and full example for ``includes/auth.php``:
 
