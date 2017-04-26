@@ -17,7 +17,7 @@ For example "ldap" comes from Kimai\_Auth\_Ldap: remove Kimai\_Auth\_ and lowerc
 If the used authenticator supports configuration parameters, you can set those with the file ``includes/auth.php`` 
 (supported since Kimai > 1.0.1). 
 
-Therefor you need to create the file ``includes/auth.php`` with the content:
+Therefore you need to create the file ``includes/auth.php`` with the content:
 
 ```php
 <?php
@@ -132,7 +132,7 @@ An advanced LDAP authenticator, that allows further configuration options.
 * **mailAttribute:** This attribute holds the users email-address that will be ported to kimai
 * **allowedGroupIds:** An array of values defined by ```groupidAttribute```. Members of the LDAP-groups referenced here will be allowed access to kimai!
 * **forceLowercase:** Whether the username for kimai shall be lowercased or not.
-* **nonLdapAcounts:** A list of kimai-usernames that shall **not** be autehnticated via LDAP but via the default kimai-authentication-adapter
+* **nonLdapAcounts:** A list of kimai-usernames that shall **not** be authenticated via LDAP but via the default kimai-authentication-adapter
 * **autocreateUsers:** Shall uses authenticated via LDAP be created automatically in kimai. If set to false the users have to be added manually to kimai and only password-verification will be handled via LDAP
 * **defaultGlobalRoleName:** The name of the default role newly created users will be associated with
 * **defaultGroupMemberships:** An array of group=>role mappings the user shall also be associated with
@@ -189,5 +189,47 @@ As this class is a subclass of the LDAP-Advanced authenticator (see above), you 
 return array(
     'host' => 'ldap://localhost',
     'enhancedIdentityPrivacy' => 'false',
+);
+```
+## SAML
+
+Kimai supports authentication via SAML (Security Assertion Markup Language) with an identity service provider.
+
+* Change ``$authenticator = "saml";`` in ``includes/autoconf.php``
+
+### Configuration-parameters
+
+* **saml_strict** Reject messages if the SAML standard is not strictly followed or not signed or encrypted if required.
+* **saml_debug** Enable debug mode (to print errors).
+* **saml_baseurl** If set use it instead of trying to guess the BaseURL of the view that will process the SAML Message.
+* **saml_spentityId** Identifier of the SP entity  (must be a URI).
+* **saml_spacsURL** ACS URL Location where the <Response> from the IdP will be returned.
+* **saml_spslsURL** SLS URL Location where the <Response> from the IdP will be returned.
+* **saml_spx509cert** Specify the certificate instead of using certs directory.
+* **saml_spprivateKey** Specify the private key instead of using the certs directory.
+* **saml_idpentityId** Identifier of the IdP entity  (must be a URI)
+* **saml_idpssoURL** URL Target of the IdP where the Authentication Request Message will be sent.
+* **saml_idpslsURL** URL Location of the IdP where SLO Request will be sent.
+* **saml_idpcertFingerprint** Instead of use the whole x509cert you can use a fingerprint in order to validate a SAMLResponse.
+* **nonSAMLAcounts** A list of kimai-usernames that shall **not** be authenticated via SAML but via the default kimai-authentication-adapter
+
+Default settings and full example for ``includes/auth.php``:
+
+```php
+<?php
+return array(
+    'saml_strict' => true,
+    'saml_debug' => true,
+    'saml_baseurl' => '',
+    'saml_spentityId' => 'https://kimai.local/libraries/php-saml-2.10.4/demo2/metadata.php',
+    'saml_spacsURL' => 'https://kimai.local/index.php',
+    'saml_spslsURL' => 'https://kimai.local/index.php',
+    'saml_spx509cert' => '',
+    'saml_spprivateKey' => '',
+    'saml_idpentityId' => 'https://accounts.google.com/o/saml2?idpid=########',
+    'saml_idpssoURL' => 'https://accounts.google.com/o/saml2/idp?idpid=########',
+    'saml_idpslsURL' => '',
+    'saml_idpcertFingerprint' => 'AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA',
+    'nonSAMLAcounts' => array('admin'),
 );
 ```
