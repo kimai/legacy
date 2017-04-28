@@ -212,6 +212,8 @@ Kimai supports authentication via SAML (Security Assertion Markup Language) with
 * **saml_idpslsURL** URL Location of the IdP where SLO Request will be sent.
 * **saml_idpcertFingerprint** Instead of use the whole x509cert you can use a fingerprint in order to validate a SAMLResponse.
 * **nonSAMLAcounts** A list of kimai-usernames that shall **not** be authenticated via SAML but via the default kimai-authentication-adapter
+* **defaultGlobalRoleName** The Global Role to assign all new SAML Authenticated users to upon creation
+* **defaultGroupMemberships** The Groups to assign to the user upon creation via SAML
 
 Default settings and full example for ``includes/auth.php``:
 
@@ -231,5 +233,7 @@ return array(
     'saml_idpslsURL' => '',
     'saml_idpcertFingerprint' => 'AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA:AA',
     'nonSAMLAcounts' => array('admin'),
+    'defaultGlobalRoleName' = 'User',
+    'defaultGroupMemberships' = array('Users' => 'User'),
 );
 ```
