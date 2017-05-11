@@ -39,7 +39,7 @@ echo kimaiInstall(
 		'lang'     => $language,
 		'prefix'   => $server_prefix,
 		'database' => $server_database,
-        'timezone' => KIMAI_TIMEZONE,
+		'timezone' => KIMAI_TIMEZONE,
 	)
 );
 
