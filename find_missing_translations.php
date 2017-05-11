@@ -91,24 +91,19 @@ if (!file_exists($keyPath)) {
 	echo 'First file could not be found: '.$keyPath."\n";
 	// Exit with an error code
 	exit(2);
-}
-elseif (!is_readable($keyPath)) {
+} elseif (!is_readable($keyPath)) {
 	echo 'First file not readable: '.$keyPath."\n";
 	exit(3);
-}
-elseif (!file_exists($valuePath)) {
+} elseif (!file_exists($valuePath)) {
 	echo 'Second file could not be found: '.$valuePath."\n";
 	exit(4);
-}
-elseif (!is_readable($valuePath)) {
+} elseif (!is_readable($valuePath)) {
 	echo 'Second file not readable: '.$valuePath."\n";
 	exit(5);
-}
-elseif (file_exists($targetPath)) {
+} elseif (file_exists($targetPath)) {
 	echo 'Third file exist already: '.$targetPath."\n";
 	exit(6);
-}
-else {
+} else {
 	// Include array from first file
 	$keyArr = include $keyPath;
 	// Count array items recursively
@@ -123,8 +118,7 @@ else {
 	if (!($fopen = fopen($targetPath, 'w'))) {
 		echo 'Third file could not be opened for writing: '.$targetPath."\n";
 		exit(8);
-	}
-	else {
+	} else {
 		// Build initial string
 		$str = '<?php'."\n".'/**
  * This file is part of
@@ -208,8 +202,7 @@ function mergeArr($arrKeys, $arrValues) {
 		echo '$arrKeys are no array: '.$arrKeys."\n";
 		// Exit with an error code
 		exit(9);
-	}
-	else {
+	} else {
 		// Loop source array
 		foreach ($arrKeys as $key => $value) {
 			
@@ -217,12 +210,10 @@ function mergeArr($arrKeys, $arrValues) {
 			if (!is_string($key)){
 				// Add key as is
 				$writeKey = $key;
-			}
-			elseif (ctype_digit($key)) {
+			} elseif (ctype_digit($key)) {
 				// Convert int string to int
 				$writeKey = (int)$key;
-			}
-			else {
+			} else {
 				// Quote strings
 				// Assuming there's no single quotes in the array keys
 				$writeKey = '\''.$key.'\'';
@@ -248,15 +239,13 @@ function mergeArr($arrKeys, $arrValues) {
 				$str = rtrim($str, ',');
 				// Add closing string for subarray
 				$str .= "\n".'),'."\n";
-			}
-			elseif (isset($arrValues[$key])) {
+			} elseif (isset($arrValues[$key])) {
 				// This key and value pair are already translated
 				// Add key with translated value to string
 				// Escape single quotes
 				$str .= "\n".$writeKey.' => '.'\''.str_replace('\'', '\\\'', $arrValues[$key]).'\',';
 				$countReused++;
-			}
-			else {
+			} else {
 				// This value should be reviewed (translated)
 				// Add original key => value pair and review message to string
 				// Escape single quotes
