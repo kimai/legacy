@@ -152,5 +152,22 @@ $mobileConfig = array(
 	</div>
 	<div data-role="content" id="dialogMessage"></div>
 </div>
+<?php
+if( isset($_POST["name"]) && isset($_POST["password"]) )
+{
+    echo "
+        <script>
+            $('#username').val('".$_POST["name"]."');
+            $('#password').val('".$_POST["password"]."');
+            $(document).ready(
+            function(){
+                    validateLoginButton();
+                    $('#btnLogin').click();
+
+            });
+        </script>
+    ";
+}
+?>
 </body>
 </html>
