@@ -53,8 +53,7 @@ Links
 You can get more information about Kimai:
 
 * at our [official website](http://www.kimai.org)
-* at our [Kimai forum](http://forum.kimai.org)
-* in our [documentation pages](http://www.kimai.org/en/documentation/)
+* in our [documentation](http://www.kimai.org/documentation/)
 
 Thanks to the [jQuery mobile Team][2]!
 
