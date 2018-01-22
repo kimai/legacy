@@ -2,7 +2,7 @@
 
 The following requirements must be met on the server installation:
 
-* PHP version 5.4 or above (not tested with PHP 7.1 yet)
+* PHP version 5.4 or above (not tested with PHP 7.2 yet)
 * MySQLi, php-xml and iconv extension for PHP
 * A MySQL database (Kimai supports table prefixes)
 * FTP or shell access to set the correct filesystem permissions.
