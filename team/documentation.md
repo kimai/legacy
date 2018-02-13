@@ -7,7 +7,7 @@ Our repository for the documentation is located at:
 
 We use Markdown to write the documentation and the great [GitbookIO](https://github.com/GitbookIO) tools to write and publish it.
 
-You can either use the [GitBook Editor](https://github.com/GitbookIO/editor) or write the Markdown directly in your favorite editor.
+You can either use the [GitBook Editor](https://www.gitbook.com/editor) or write the Markdown directly in your favorite editor.
 If you are going to add Chapters or Articles manually, make sure to include them in the file SUMMARY.md.
 
 If you want to convert HTML documentation to Markdown, you can for example use the online tool [heckyesmarkdown.com](http://heckyesmarkdown.com/)
