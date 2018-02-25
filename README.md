@@ -4,7 +4,7 @@ Additional invoice templates for your [Kimai Time-Tracking](https://github.com/k
 
 Copy files from here to your Kimai installation to the folder ```extensions/ki_invoice/invoices/```.
 
-Please also read our [invoice template documentation](http://www.kimai.org/documentation/developer/invoice-templates.html).
+Please also read our [invoice template documentation](https://www.kimai.org/documentation/invoice-templates/).
 
 ## Debug (HTML)
 
