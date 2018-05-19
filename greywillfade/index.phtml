@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <?php
 /**
- * Kimai invoice temaplte greywillfade
+ * Kimai invoice template greywillfade
  *
  * Based on https://github.com/greywillfade/freeagent-invoice.
  * Migrated to Kimai by https://github.com/kevinpapst/kimai
@@ -10,9 +10,9 @@
 // ==================== CONFIGURATIONS ====================
 
 // days until payment must be placed
-$x_payDays      = 30;
+$x_payDays = 30;
 // my company details
-$myCompany      = array(
+$myCompany = [
     'name'      => 'My Company',
     'email'     => 'email@company.com',
     'street'    => 'Example-Street 14',
@@ -23,33 +23,33 @@ $myCompany      = array(
     'bank_name' => 'My Bank Name',
     'bank_code' => '01-01-01',
     'bank_acc'  => '1234567890'
-);
+];
 
 // ================================================================================================================
 // ==================== ONLY EDIT BELOW THIS POINT, IF YOU WANT TO FURTHER ADJUST THE TEMPLATE ====================
 // ================================================================================================================
 
 // array values
-$entries        = $this->entries;
-$projects       = $this->projects;
-$customer       = $this->customer;
+$entries = $this->entries;
+$projects = $this->projects;
+$customer = $this->customer;
 
 // scalar values
-$amount         = $this->amount;
-$vat            = $this->vat;
-$vatRate        = $this->vatRate;
-$total          = $this->total;
-$invoiceId      = $this->invoiceId;
-$currency       = $this->currencySign;
-$currencyName   = $this->currencyName;
-$dateFormat     = $this->dateFormat;
-$beginDate      = $this->beginDate;
-$endDate        = $this->endDate;
-$invoiceDate    = $this->invoiceDate;
+$amount = $this->amount;
+$vat = $this->vat;
+$vatRate = $this->vatRate;
+$total = $this->total;
+$invoiceId = $this->invoiceId;
+$currency = $this->currencySign;
+$currencyName = $this->currencyName;
+$dateFormat = $this->dateFormat;
+$beginDate = $this->beginDate;
+$endDate = $this->endDate;
+$invoiceDate = $this->invoiceDate;
 
 // some simple calculation and formatting, which shouldn't be done in the template HTML code itself
-$x_invoiceDate  = strftime($dateFormat, $invoiceDate);                              // the date of this invoice
-$x_dueDate      = strftime($dateFormat, $invoiceDate + (86400*$x_payDays));         // date when payment must be placed
+$x_invoiceDate = strftime($dateFormat, $invoiceDate);                              // the date of this invoice
+$x_dueDate = strftime($dateFormat, $invoiceDate + (86400 * $x_payDays));         // date when payment must be placed
 
 ?><html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
@@ -64,8 +64,7 @@ $x_dueDate      = strftime($dateFormat, $invoiceDate + (86400*$x_payDays));     
         <div id="invoice-header">
             <img alt="Mainlogo_large" class="logo screen" src="<?php echo $this->invoiceUrl; ?>images/logo.png" />
             <div class="vcard" id="company-address">
-                <div class="fn org"><strong><?php echo $myCompany['name']; ?></strong>
-                </div>
+                <div class="fn org"><strong><?php echo $myCompany['name']; ?></strong></div>
                 <div class="adr">
                     <div class="street-address"><?php echo $myCompany['street']; ?></div>
                     <!-- street-address -->
@@ -111,15 +110,15 @@ $x_dueDate      = strftime($dateFormat, $invoiceDate + (86400*$x_payDays));     
                     <tr class="item">
                         <td class="item_l"><?php echo number_format($row['hour'], 2); ?></td>
                         <td class="item_l"><?php echo $row['desc']; ?></td>
-                        <td class="item_r"><?php echo $currency; ?></span> <span><?php echo number_format($row['rate'],2 ); ?></td>
-                        <td class="item_r"><?php echo $currency; ?></span> <span><?php echo $row['amount']; ?></td>
+                        <td class="item_r"><?php echo $currency; ?> <span><?php echo number_format($row['rate'],2 ); ?></span></td>
+                        <td class="item_r"><?php echo $currency; ?> <span><?php echo $row['amount']; ?></span></td>
                     </tr>
                 <?php } else { ?>
                     <tr class="item">
                         <td class="item_l"><?php echo number_format($row['multiplier'], 2); ?></td>
                         <td class="item_l"><?php echo $row['desc']; ?></td>
-                        <td class="item_r"><?php echo $currency; ?></span> <span><?php echo number_format($row['value'],2 ); ?></td>
-                        <td class="item_r"><?php echo $currency; ?></span> <span><?php echo $row['amount']; ?></td>
+	                    <td class="item_r"><?php echo $currency; ?> <span><?php echo number_format($row['value'],2 ); ?></span></td>
+	                    <td class="item_r"><?php echo $currency; ?> <span><?php echo $row['amount']; ?></span></td>
                     </tr>
                 <?php }
             } ?>
@@ -144,13 +143,13 @@ $x_dueDate      = strftime($dateFormat, $invoiceDate + (86400*$x_payDays));     
         </table>
         <!-- invoice-amount -->
         <div id="invoice-other">
-            <h2>Other Information</h2> 
+            <h2>Other Information</h2>
             <div id="company-reg-number"><strong>Company Registration Number:</strong> <?php echo $myCompany['reg_nr']; ?></div>
             <div id="contract-number"><strong>Contract/PO:</strong> <?php echo $myCompany['contract']; ?></div>
         </div>
         <!-- invoice-other -->
         <div id="payment-details">
-            <h2>Payment Details</h2> 
+            <h2>Payment Details</h2>
             <div id="bank_name"><?php echo $myCompany['bank_name']; ?></div>
             <div id="sort-code"><strong>Bank/Sort Code:</strong> <?php echo $myCompany['bank_code']; ?></div>
             <div id="account-number"><strong>Account Number:</strong> <?php echo $myCompany['bank_acc']; ?></div>
@@ -165,5 +164,4 @@ $x_dueDate      = strftime($dateFormat, $invoiceDate + (86400*$x_payDays));     
         <!-- comments -->
     </div>
 </body>
-
 </html>

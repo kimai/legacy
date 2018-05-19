@@ -23,13 +23,13 @@
  * @author Kevin Papst <kpapst@gmx.net>
  */
 
-$allVariables   = $this->getVars();
-$customer       = $this->customer;
-$projects       = $this->projects;
-$entries        = $this->entries;
+$allVariables = $this->getVars();
+$customer = $this->customer;
+$projects = $this->projects;
+$entries = $this->entries;
 
 // variables which do not exist in the ODT renderer
-$noOdt = array('invoiceUrl');
+$noOdt = ['invoiceUrl'];
 
 ?><html>
 	<head>
@@ -65,29 +65,29 @@ $noOdt = array('invoiceUrl');
 				</thead>
 				<tbody>
                 <?php
-                foreach($allVariables as $key => $value)
-                {
-                    if ($key == 'CustomerODT' || $key == 'ProjectODT') continue;
+                foreach ($allVariables as $key => $value) {
+                    if ($key == 'CustomerODT' || $key == 'ProjectODT') {
+                        continue;
+                    }
                     echo '<tr>';
-                    echo '<td>'.$key.'</td>';
+                    echo '<td>' . $key . '</td>';
                     if (is_array($value)) {
                         echo '<td><i>see below</i></td>';
                         echo '<td><i>not available</i></td>';
-                    } else if (in_array($key, $noOdt)) {
-                        echo '<td>'.$value.'</td>';
+                    } elseif (in_array($key, $noOdt)) {
+                        echo '<td>' . $value . '</td>';
                         echo '<td><i>not available</i></td>';
-                    } else if (is_object($value)) {
+                    } elseif (is_object($value)) {
                         echo '<td><i>not available: Class:' . get_class($value) . '</i></td>';
                         echo '<td><i>not available: Class:' . get_class($value) . '</i></td>';
                     } else {
-                        echo '<td>'.$value.'</td>';
-                        echo '<td>[var.'.$key.']</td>';
+                        echo '<td>' . $value . '</td>';
+                        echo '<td>[var.' . $key . ']</td>';
                     }
-                    echo '<td>$this->'.$key.'</td>';
+                    echo '<td>$this->' . $key . '</td>';
                     echo '</tr>';
                 }
-                ?>
-                <?php if (isset($this->ProjectODT)) { ?>
+                if (isset($this->ProjectODT)) { ?>
                 <tr>
                     <td>project</td>
                     <td><?php echo $this->ProjectODT; ?></td>
@@ -111,12 +111,11 @@ $noOdt = array('invoiceUrl');
                 </thead>
                 <tbody>
                 <?php
-                foreach($this->CustomerODT as $key => $value)
-                {
-                echo '<tr>';
-                    echo '<td>'.$key.'</td>';
-                    echo '<td>'.$value.'</td>';
-                    echo '<td>[var.'.$key.']</td>';
+                foreach ($this->CustomerODT as $key => $value) {
+                    echo '<tr>';
+                    echo '<td>' . $key . '</td>';
+                    echo '<td>' . $value . '</td>';
+                    echo '<td>[var.' . $key . ']</td>';
                     echo '</tr>';
                 }
                 ?>
@@ -137,12 +136,11 @@ $noOdt = array('invoiceUrl');
                 </thead>
                 <tbody>
                 <?php
-                foreach($customer as $key => $value)
-                {
-                echo '<tr>';
-                    echo '<td>'.$key.'</td>';
-                    echo '<td>'.$value.'</td>';
-                    echo '<td>$this->customer['."'".$key."'".']</td>';
+                foreach ($customer as $key => $value) {
+                    echo '<tr>';
+                    echo '<td>' . $key . '</td>';
+                    echo '<td>' . $value . '</td>';
+                    echo '<td>$this->customer[' . "'" . $key . "'" . ']</td>';
                     echo '</tr>';
                 }
                 ?>
@@ -163,14 +161,13 @@ $noOdt = array('invoiceUrl');
                 <tbody>
                 <?php
                 $i = 0;
-                foreach($projects as $project)
-                {
+                foreach ($projects as $project) {
                     echo '<tr>';
-                    echo '<td>$this->projects'."['".$i."’]".'</td>';
+                    echo '<td>$this->projects' . "['" . $i . "’]" . '</td>';
                     echo '<td class="array"><pre>';
                     print_r($project);
                     echo '</pre></td>';
-                    echo '<td>'.$i.'</td>';
+                    echo '<td>' . $i . '</td>';
                     echo '</tr>';
                     $i++;
                 }
@@ -192,13 +189,14 @@ $noOdt = array('invoiceUrl');
                 <tbody>
                 <?php
                 $i = 0;
-                foreach($entries as $entry)
-                {
+                foreach($entries as $entry) {
                     echo '<tr>';
-                    echo '<td>$this->entries'."['".$i."']".'</td>';
-                    echo '<td class="array"><pre>'.print_r($entry,true).'</pre></td>';
+                    echo '<td>$this->entries' . "['" . $i . "']" . '</td>';
+                    echo '<td class="array"><pre>' . print_r($entry, true) . '</pre></td>';
                     echo '<td class="array">';
-                    foreach ($entry as $k => $v) echo '[row.'.$k.']<br>';
+                    foreach ($entry as $k => $v) {
+                        echo '[row.' . $k . ']<br>';
+                    }
                     echo '</td>';
                     echo '</tr>';
                     $i++;
@@ -206,7 +204,6 @@ $noOdt = array('invoiceUrl');
                 ?>
                 </tbody>
             </table>
-
         </article>
 	</body>
 </html>
