@@ -48,7 +48,7 @@ $noOdt = array('invoiceUrl');
             </p>
             <p>
                 You might find some more information about building invoice templates at:
-                <a href="http://www.kimai.org/documentation/developer/invoice-templates.html" target="_blank">http://www.kimai.org/documentation/developer/invoice-templates.html</a>
+                <a href="https://www.kimai.org/documentation/invoice-templates/" target="_blank">https://www.kimai.org/documentation/invoice-templates/</a>
             </p>
 
             <hr/>
@@ -76,6 +76,9 @@ $noOdt = array('invoiceUrl');
                     } else if (in_array($key, $noOdt)) {
                         echo '<td>'.$value.'</td>';
                         echo '<td><i>not available</i></td>';
+                    } else if (is_object($value)) {
+                        echo '<td><i>not available: Class:' . get_class($value) . '</i></td>';
+                        echo '<td><i>not available: Class:' . get_class($value) . '</i></td>';
                     } else {
                         echo '<td>'.$value.'</td>';
                         echo '<td>[var.'.$key.']</td>';
@@ -91,7 +94,7 @@ $noOdt = array('invoiceUrl');
                     <td>[var.project]</td>
                     <td><i>not available</i></td>
                 </tr>
-                <?php } ?>
+                <?php } ?>
 				</tbody>
 			</table>
 
@@ -119,7 +122,7 @@ $noOdt = array('invoiceUrl');
                 ?>
                 </tbody>
             </table>
-            <?php } ?>
+            <?php } ?>
 
             <hr/>
 
