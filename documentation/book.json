@@ -1,0 +1,17 @@
+{
+	"gitbook": "2.x.x",
+	"output": null,
+	"language": "en",
+	"generator": "site",
+	"title": "Kimai Documentation",
+	"description": null,
+	"github": "kimai/kimai",
+	"githubHost": "https://github.com/",
+	"plugins": [],
+	"pluginsConfig": {},
+	"links": {
+		"sidebar": {
+			"Kimai / Issues and Support": "https://github.com/kimai/kimai/issues"
+		}
+	}
+}
